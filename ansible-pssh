@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+OPT="-e ansible_python_interpreter=/usr/bin/python3"
+
+PATTERN=$1 # Example-Bookmark
+if [ -z $PATTERN ]; then
+    echo 2>&1 "role required: ansible-pssh ROLE COMMAND"
+    exit 1
+fi
+
+COMMAND="${@:2:($#-1)}"
+if [ -z "$COMMAND" ]; then
+    echo 2>&1 "role command: ansible-pssh ROLE COMMAND"
+    exit 1
+fi
+
+ansible $PATTERN $OPT -m shell -a "$COMMAND"

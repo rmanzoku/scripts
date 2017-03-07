@@ -1,0 +1,7 @@
+#!/bin/bash
+
+REPO="$HOME/ansible-mybootstrap"
+
+cd "$REPO"
+git pull origin master
+ansible-playbook bootstrap.yml

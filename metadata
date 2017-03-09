@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "public-ipv4: $(curl -s "http://httpbin.org/ip" | jq -r .origin )"

@@ -10,4 +10,5 @@ fi
 case $1 in
     "nginx" ) curl -s http://nginx.org/en/CHANGES | grep Changes | head -n 10 ;;
     "docker" ) curl -s https://apt.dockerproject.org/repo/dists/ubuntu-xenial/main/binary-amd64/Packages | grep Version ;;
+    "td-agent" ) curl -s http://packages.treasuredata.com.s3.amazonaws.com/2/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
 esac

@@ -1,3 +1,5 @@
 #!/bin/bash
 
 echo "public-ipv4: $(curl -s "http://httpbin.org/ip" | jq -r .origin )"
+echo "kernel-name: $(uname -s)"
+echo "kernel-release: $(uname -r)"

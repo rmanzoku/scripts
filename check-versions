@@ -3,7 +3,6 @@
 set -eu
 
 if [ $# -ne 1 ]; then
-    echo "set service"
     echo "nginx docker td-agent ansible packer peco hub jd proxysql"
     exit
 fi

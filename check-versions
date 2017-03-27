@@ -3,7 +3,7 @@
 set -eu
 
 if [ $# -ne 1 ]; then
-    echo "nginx docker td-agent ansible packer peco hub jd proxysql"
+    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote"
     exit
 fi
 

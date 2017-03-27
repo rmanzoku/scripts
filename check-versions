@@ -17,6 +17,7 @@ case $1 in
     "peco") curl -s https://api.github.com/repos/peco/peco/tags | jq -r '.[].name' | head -n 10 ;;
     "hub") curl -s https://api.github.com/repos/github/hub/tags | jq -r '.[].name' | head -n 10 ;;
     "jd") curl -s https://api.github.com/repos/tidwall/jd/tags | jq -r '.[].name' | head -n 10 ;;
-    "proxysql") curl -s https://api.github.com/repos/sysown/proxysql/tags | jq -r '.[].name' | head -n 10 ;;
+    "proxysql") echo "https://github.com/sysown/proxysql/releases";
+		curl -s https://api.github.com/repos/sysown/proxysql/tags | jq -r '.[].name' | head -n 10 ;;
 
 esac

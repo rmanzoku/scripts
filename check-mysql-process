@@ -3,7 +3,7 @@
 set -eu
 
 PID=$1
-SQL="select count(*) from information_schema.processlist where ID = $PID"
+SQL="select count(*) from information_schema.processlist where ID = $PID AND command = \"Query\""
 
 COUNT=$(mysql -u "$USER" -e "$SQL" | sed -e '1d')
 
@@ -14,6 +14,6 @@ if [ "$COUNT" = 1 ]; then
     echo running
 else
     # おわった
-    SQL3="select * from information_schema.processlist"
+    SQL3="select * from information_schema.processlist where ID = $PID"
     mysql -u "$USER" -e "$SQL3" | sed -e '1d' | ~/scripts/post2slack
 fi

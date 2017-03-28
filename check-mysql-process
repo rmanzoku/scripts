@@ -15,5 +15,5 @@ if [ "$COUNT" = 1 ]; then
 else
     # おわった
     SQL3="select * from information_schema.processlist where ID = $PID"
-    mysql -u "$USER" -e "$SQL3" | sed -e '1d' | ~/scripts/post2slack
+    mysql -u "$USER" --table --execute "$SQL3" | post2slack
 fi

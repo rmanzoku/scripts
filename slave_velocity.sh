@@ -19,8 +19,8 @@ LATEST_BEHIND=$(echo "$LATEST" | cut -d" " -f2)
 PERIOD=$(($LATEST_TIME - $OLD_TIME))
 DISTANCE=$(($OLD_BEHIND - $LATEST_BEHIND))
 
-VELOCITY=$(($DISTANCE / $PERIOD))
-REMAIN=$(($LATEST_BEHIND / $VELOCITY))
+VELOCITY=$(echo "$DISTANCE $PERIOD" | awk '{printf ("%f", $1/$2)}')
+REMAIN=$(echo "$LATEST_BEHIND $VELOCITY" | awk '{printf ("%d", $1/$2)}')
 
 echo Decrease Seconds_Behind_Master $VELOCITY / sec
 echo Forecast $REMAIN sec

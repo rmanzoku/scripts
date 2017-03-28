@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+import os
+import sys
+import urllib.request
+import urllib.parse
+
+WEBHOOK_URL = os.environ.get('WEBHOOK_URL')
+CHANNEL = os.environ.get('CHANNEL')
+
+
+def main():
+
+    post_data = {
+        'channel': CHANNEL,
+        'username': 'webhookbot',
+        'text': "```" + sys.stdin.read() + "```",
+        'icon_emoji': ':ghost:'
+    }
+
+    post(post_data)
+
+
+def post(body):
+    encoded_post_data = urllib.parse.urlencode({"payload": body}).encode(encoding='ascii')
+
+    urllib.request.urlopen(url=WEBHOOK_URL, data=encoded_post_data)
+
+
+if __name__ == "__main__":
+    exit(main())

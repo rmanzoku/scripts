@@ -23,6 +23,7 @@ def main():
 
     post_data = {
         'channel': CHANNEL,
+        "link_names": 1,
         'username': args.user,
         'text': text,
         'icon_emoji': ':ghost:'

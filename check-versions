@@ -29,6 +29,8 @@ case $1 in
 		curl -s https://api.github.com/repos/sysown/proxysql/tags | jq -r '.[].name' | head -n 10 ;;
 
     "boostnote") echo "https://github.com/BoostIO/boost-releases";
-		curl -s https://api.github.com/repos/BoostIO/Boostnote/tags | jq -r '.[].name' | head -n 10 ;;
+		 curl -s https://api.github.com/repos/BoostIO/Boostnote/tags | jq -r '.[].name' | head -n 10 ;;
+
+    *) echo "Not Found $1" >&2;;
 
 esac

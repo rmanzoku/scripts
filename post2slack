@@ -5,26 +5,24 @@ import argparse
 import urllib.request
 import urllib.parse
 
-WEBHOOK_URL = os.environ.get('WEBHOOK_URL')
-CHANNEL = os.environ.get('CHANNEL')
-
 
 def main():
     args = define_parsers()
-
+    varidation(args)
     text = ""
 
     if args.message != "":
         # Coming row string like r"\\n"
         text += args.message.replace('\\n', '\n') + "\n"
 
-    if sys.stdin.read() != "":
+    stdin = sys.stdin.read()
+    if stdin != "":
         text += "```"
-        text += sys.stdin.read()
+        text += stdin
         text += "```"
 
     post_data = {
-        'channel': CHANNEL,
+        'channel': args.channel,
         "link_names": 1,
         'username': args.user,
         'text': text,
@@ -32,23 +30,23 @@ def main():
     }
 
     if text != "":
-        post(post_data)
+        post(args.webhook_url, post_data)
     else:
         print("No text")
 
 
-def post(body):
+def post(url, body):
     encoded_post_data = urllib.parse.urlencode({"payload": body}).encode(encoding='ascii')
-    urllib.request.urlopen(url=WEBHOOK_URL, data=encoded_post_data)
+    urllib.request.urlopen(url=url, data=encoded_post_data)
 
 
-def varidation():
-    if WEBHOOK_URL is None:
-        print("Set WEBHOOK_URL environment variable")
+def varidation(args):
+    if args.webhook_url is None:
+        print("Set WEBHOOK_URL")
         exit(1)
 
-    if CHANNEL is None:
-        print("Set CHANNEL variable")
+    if args.channel is None:
+        print("Set CHANNEL")
         exit(1)
 
 
@@ -61,10 +59,13 @@ def define_parsers():
                         help='Username')
     parser.add_argument('-m', "--message", type=str, default="",
                         help='Add message on beginning part')
+    parser.add_argument("--channel", type=str, default=os.environ.get('CHANNEL', ""),
+                        help='Slack channel. Default CHANNEL')
+    parser.add_argument("--webhook-url", type=str, default=os.environ.get('WEBHOOK_URL', ""),
+                        help='Slack webhook url. Default WEBHOOK_URL')
 
     return parser.parse_args()
 
 
 if __name__ == "__main__":
-    varidation()
     exit(main())

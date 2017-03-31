@@ -2,13 +2,12 @@
 
 set -eu
 
-LOGFILE="$HOME/velocity.log"
 SAMPLES=5
 
-mysql -u "$USER" -e "show slave status\G" | grep -e Seconds_Behind_Master | cut -d":" -f2 | xargs -I{} echo "$(date +"%s") {}" >> $LOGFILE
+mysql -u "$USER" -e "show slave status\G" | grep -e Seconds_Behind_Master | cut -d":" -f2 | xargs -I{} echo "$(date +"%s") {}" >> $VLOG
 
-OLD=$(tail -n $SAMPLES "$LOGFILE" | head -n 1)
-LATEST=$(tail -n $SAMPLES "$LOGFILE" | tail -n 1)
+OLD=$(tail -n $SAMPLES "$VLOG" | head -n 1)
+LATEST=$(tail -n $SAMPLES "$VLOG" | tail -n 1)
 
 OLD_TIME=$(echo "$OLD" | cut -d" " -f1)
 OLD_BEHIND=$(echo "$OLD" | cut -d" " -f2)

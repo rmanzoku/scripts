@@ -14,12 +14,14 @@ def main():
 
     text = ""
 
-    if args.first_line != "":
-        text += args.first_line + "\n"
+    if args.message != "":
+        # Coming row string like r"\\n"
+        text += args.message.replace('\\n', '\n') + "\n"
 
-    text += "```"
-    text += sys.stdin.read()
-    text += "```"
+    if sys.stdin.read() != "":
+        text += "```"
+        text += sys.stdin.read()
+        text += "```"
 
     post_data = {
         'channel': CHANNEL,
@@ -29,7 +31,10 @@ def main():
         'icon_emoji': ':ghost:'
     }
 
-    post(post_data)
+    if text != "":
+        post(post_data)
+    else:
+        print("No text")
 
 
 def post(body):
@@ -48,14 +53,14 @@ def varidation():
 
 
 def define_parsers():
-    parser = argparse.ArgumentParser(description='Post to slack simply',
+    parser = argparse.ArgumentParser(description='Post stdin to slack ',
                                      add_help=False)
     parser.add_argument('--help', action='help', help='help')
 
     parser.add_argument('-u', '--user', type=str, default="webhookbot",
                         help='Username')
-    parser.add_argument('-l', "--first-line", type=str, default="",
-                        help='Add first line')
+    parser.add_argument('-m', "--message", type=str, default="",
+                        help='Add message on beginning part')
 
     return parser.parse_args()
 

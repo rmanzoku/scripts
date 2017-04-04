@@ -1,0 +1,15 @@
+#compdef check-versions
+
+function _check-versions() {
+
+    _arguments -C \
+               '1:: :->1' \
+	&& ret=0
+
+    case "$state" in
+            (1)
+	        compadd `check-versions`
+			            ;;
+    esac
+
+}

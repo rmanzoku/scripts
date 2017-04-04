@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eu
+
+U=${1:-$USER}
+
+curl -s "https://api.github.com/users/$U/repos" | jq -r '.[].full_name'

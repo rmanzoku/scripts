@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -eu
+
+if [ $# != 1 ]; then
+    mysql_config_editor print --all
+    exit
+fi
+
+LOGIN_PATH=$1
+export MYSQL_TEST_LOGIN_FILE="$HOME/.mylogin.cnf"
+export MYSQL_PS1="\\u@$LOGIN_PATH [\\d]>\\_"
+
+mysql --login-path="$LOGIN_PATH" --prompt="$MYSQL_PS1"

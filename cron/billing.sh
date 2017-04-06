@@ -42,4 +42,4 @@ do
 done
 
 IFS=$'\n'
-echo "${RESULTS[*]}" | column -t -s"@" | post2slack --emoji dollar -u Billing -m "*AWS Billing report $(TZ=Asia/Tokyo date +"%Y/%m/%d")*"
+echo "${RESULTS[*]}" | column -t -s"@" | post2slack --emoji :dollar: -u Billing -m "*AWS Billing report $(TZ=Asia/Tokyo date +"%Y/%m/%d")*"

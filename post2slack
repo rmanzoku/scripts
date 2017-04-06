@@ -9,6 +9,8 @@ import urllib.parse
 def main():
     args = define_parsers()
     varidation(args)
+
+    # Format text
     text = ""
 
     if args.message != "":
@@ -26,7 +28,7 @@ def main():
         "link_names": 1,
         'username': args.user,
         'text': text,
-        'icon_emoji': ":" + args.emoji + ":"
+        'icon_emoji': args.emoji
     }
 
     if text != "":
@@ -49,6 +51,10 @@ def varidation(args):
         print("Set CHANNEL")
         exit(1)
 
+    if not args.emoji.startswith(":") or not args.emoji.endswith(":"):
+        print("Emoji needs to be surrounded by \":\" like :ghost:")
+        exit(1)
+
 
 def define_parsers():
     parser = argparse.ArgumentParser(description='Post stdin to slack ',
@@ -59,7 +65,7 @@ def define_parsers():
                         help='Username')
     parser.add_argument('-m', "--message", type=str, default="",
                         help='Add message on beginning part')
-    parser.add_argument("--emoji", type=str, default="ghost",
+    parser.add_argument("--emoji", type=str, default=":ghost:",
                         help='Emoji')
     parser.add_argument("--channel", type=str, default=os.environ.get('CHANNEL', ""),
                         help='Slack channel. Default CHANNEL')

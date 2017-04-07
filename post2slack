@@ -65,7 +65,7 @@ def define_parsers():
                         help='Username')
     parser.add_argument('-m', "--message", type=str, default="",
                         help='Add message on beginning part')
-    parser.add_argument("--emoji", type=str, default=":ghost:",
+    parser.add_argument("--emoji", type=str, default=":ramen:",
                         help='Emoji')
     parser.add_argument("--channel", type=str, default=os.environ.get('CHANNEL', ""),
                         help='Slack channel. Default CHANNEL')

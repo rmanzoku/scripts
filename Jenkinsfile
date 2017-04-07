@@ -10,7 +10,8 @@ ls'''
             
           },
           "post2slack": {
-            sh 'post2slack -m "Jenkins"'
+            sh '''env
+post2slack -m "Jenkins"'''
             
           }
         )

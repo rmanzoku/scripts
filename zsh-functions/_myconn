@@ -7,7 +7,7 @@ function _myconn() {
 
     case "$state" in
         (1)
-	    compadd `mysql_config_editor print --all | sed -n -e "s/\[\(.*\)\]/\1/p"`
+	    compadd `myconn | sed -n -e "s/\[\(.*\)\]/\1/p"`
 	    ;;
     esac
 }

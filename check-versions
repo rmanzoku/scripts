@@ -15,7 +15,8 @@ case $1 in
 
     "td-agent" ) curl -s http://packages.treasuredata.com.s3.amazonaws.com/2/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
 
-    "ansible") curl -s https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;
+    "ansible") echo "https://github.com/ansible/ansible/blob/devel/CHANGELOG.md";
+	       curl -s https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;
 
     "packer") curl -s https://api.github.com/repos/mitchellh/packer/tags | jq -r '.[].name' | head -n 10 ;;
 

@@ -21,6 +21,6 @@ post2slack -m "Jenkins"'''
   environment {
     CHANNEL = '#rmanzoku-tl'
     WEBHOOK_URL = 'https://hooks.slack.com/services/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'
-    PATH = '$PWD:$PATH'
+    PATH = '$WORKSPACE:$PATH'
   }
 }

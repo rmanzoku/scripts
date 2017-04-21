@@ -17,24 +17,35 @@ def main():
         # Coming row string like r"\\n"
         text += args.message.replace('\\n', '\n') + "\n"
 
+    attachments = []
+    color = "danger" if args.error else args.color
+
     stdin = sys.stdin.read()
+
     if stdin != "":
-        text += "```"
-        text += stdin
-        text += "```"
+        if color != "":
+            attachment = {
+                'color': color,
+                'text': stdin
+            }
+            attachments.append(attachment)
+
+        else:
+            text += "```{0}```".format(stdin)
 
     post_data = {
         'channel': args.channel,
         "link_names": 1,
         'username': args.user,
         'text': text,
+        'attachments': attachments,
         'icon_emoji': args.emoji
     }
 
-    if text != "":
+    if text != "" or len(attachments) != 0:
         post(args.webhook_url, post_data)
     else:
-        print("No text")
+        print("Input stdin or --message arg")
 
 
 def post(url, body):
@@ -67,6 +78,11 @@ def define_parsers():
                         help='Add message on beginning part')
     parser.add_argument("--emoji", type=str, default=":ghost:",
                         help='Emoji')
+    parser.add_argument("--color", type=str, default="",
+                        help='Set color to stdin message')
+    parser.add_argument("-e", "--error", dest="error", action='store_true',
+                        help='Error message')
+    parser.set_defaults(error=False)
     parser.add_argument("--channel", type=str, default=os.environ.get('CHANNEL', ""),
                         help='Slack channel. Default CHANNEL')
     parser.add_argument("--webhook-url", type=str, default=os.environ.get('WEBHOOK_URL', ""),

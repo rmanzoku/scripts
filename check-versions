@@ -12,7 +12,7 @@ CURL="curl -s"
 GITHUB_CURL="$CURL $USEROPT"
 
 if [ $# -ne 1 ]; then
-    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote redash"
+    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote redash rails"
     exit
 fi
 
@@ -43,6 +43,9 @@ case $1 in
 
     "redash") echo "https://github.com/getredash/redash/blob/master/CHANGELOG.md";
 	       $GITHUB_CURL https://api.github.com/repos/getredash/redash/tags | jq -r '.[].name' | head -n 10 ;;
+
+    "rails") echo "http://weblog.rubyonrails.org/releases/";
+	      $GITHUB_CURL https://api.github.com/repos/rails/rails/tags | jq -r '.[].name' | head -n 10 ;;
 
     *) echo "Not Found $1" >&2;;
 

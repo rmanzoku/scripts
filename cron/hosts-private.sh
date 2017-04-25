@@ -20,6 +20,7 @@ do
 	    --filters \
 	    'Name=instance-state-name,Values=running' \
 	    'Name=tag:Name,Values=*' \
+	    'Name=private-ip-address,Values=*' \
 	| $JQ -r '.Reservations[].Instances[] | [.PrivateIpAddress,(.Tags[] | select(.Key == "Name") | .Value // ""),"# "+.InstanceId] | join(" ")' \
 	      >> "$CACHE_FILE.tmp"
 

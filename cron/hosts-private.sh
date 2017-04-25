@@ -26,6 +26,4 @@ do
 
 done
 
-column -t < "$CACHE_FILE.tmp" > "$CACHE_FILE"
-
-
+sort -t" " -k2 "$CACHE_FILE.tmp" | column -t > "$CACHE_FILE"

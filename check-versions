@@ -1,36 +1,48 @@
 #!/bin/bash
 
-set -eu
+set -e
+
+USEROPT=""
+
+if test "$GITHUB_USER:$GITHUB_TOKEN" != ":"; then
+    USEROPT="-u $GITHUB_USER:$GITHUB_TOKEN"
+fi
+
+CURL="curl -s"
+GITHUB_CURL="$CURL $USEROPT"
 
 if [ $# -ne 1 ]; then
-    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote"
+    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote redash"
     exit
 fi
 
 case $1 in
     "nginx" ) echo "https://nginx.org/en/CHANGES";
-	      curl -s http://nginx.org/en/CHANGES | grep Changes | head -n 10 ;;
+	      $CURL http://nginx.org/en/CHANGES | grep Changes | head -n 10 ;;
 
-    "docker" ) curl -s https://apt.dockerproject.org/repo/dists/ubuntu-xenial/main/binary-amd64/Packages | grep Version ;;
+    "docker" ) $CURL https://apt.dockerproject.org/repo/dists/ubuntu-xenial/main/binary-amd64/Packages | grep Version ;;
 
-    "td-agent" ) curl -s http://packages.treasuredata.com.s3.amazonaws.com/2/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
+    "td-agent" ) $CURL http://packages.treasuredata.com.s3.amazonaws.com/2/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
 
     "ansible") echo "https://github.com/ansible/ansible/blob/devel/CHANGELOG.md";
-	       curl -s https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;
+	       $GITHUB_CURL https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "packer") curl -s https://api.github.com/repos/mitchellh/packer/tags | jq -r '.[].name' | head -n 10 ;;
+    "packer") $GITHUB_CURL https://api.github.com/repos/hashicorp/packer/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "peco") curl -s https://api.github.com/repos/peco/peco/tags | jq -r '.[].name' | head -n 10 ;;
+    "peco") $GITHUB_CURL https://api.github.com/repos/peco/peco/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "hub") curl -s https://api.github.com/repos/github/hub/tags | jq -r '.[].name' | head -n 10 ;;
+    "hub") $GITHUB_CURL https://api.github.com/repos/github/hub/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "jd") curl -s https://api.github.com/repos/tidwall/jd/tags | jq -r '.[].name' | head -n 10 ;;
+    "jd") $GITHUB_CURL https://api.github.com/repos/tidwall/jd/tags | jq -r '.[].name' | head -n 10 ;;
 
     "proxysql") echo "https://github.com/sysown/proxysql/releases";
-		curl -s https://api.github.com/repos/sysown/proxysql/tags | jq -r '.[].name' | head -n 10 ;;
+		$GITHUB_CURL https://api.github.com/repos/sysown/proxysql/tags | jq -r '.[].name' | head -n 10 ;;
 
     "boostnote") echo "https://github.com/BoostIO/boost-releases";
-		 curl -s https://api.github.com/repos/BoostIO/Boostnote/tags | jq -r '.[].name' | head -n 10 ;;
+		 $GITHUB_CURL https://api.github.com/repos/BoostIO/Boostnote/tags | jq -r '.[].name' | head -n 10 ;;
+
+    "redash") echo "https://github.com/getredash/redash/blob/master/CHANGELOG.md";
+	       $GITHUB_CURL https://api.github.com/repos/getredash/redash/tags | jq -r '.[].name' | head -n 10 ;;
 
     *) echo "Not Found $1" >&2;;
 

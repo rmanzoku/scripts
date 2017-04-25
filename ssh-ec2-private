@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -eu
+
+export AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
+export AWS_PROFILE=$1
+AWS_CLI="/usr/local/bin/aws"
+JQ="/usr/bin/jq"
+
+ssh "$($AWS_CLI ec2 describe-instances --filter "Name=instance-state-name,Values=running" \
+    | $JQ ".Reservations[].Instances[] | select(has(\"PrivateIpAddress\")) | {InstanceId, InstanceName: (.Tags[] | select(.Key==\"Name\").Value), PrivateIpAddress}" \
+    | jq -r 'to_entries | [.[].value] | @csv' \
+    | sed s/\"//g \
+    | peco \
+    | cut -f 3 -d,)" "${@:2}"

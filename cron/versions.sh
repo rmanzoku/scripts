@@ -14,7 +14,7 @@ do
     check-versions "$i" | head -n 2 > "$TMPDIR/$i.new"
 
     if ! diff -q "$TMPDIR/$i" "$TMPDIR/$i.new" > /dev/null; then
-	post2slack --emoji :white_check_mark: -u VersionCheck -m "$i" < "$TMPDIR/$i.new"
+	post2slack --emoji :white_check_mark: -u VersionChecker -m "*$i update is detected*" < "$TMPDIR/$i.new"
     fi
 
     mv "$TMPDIR/$i.new" "$TMPDIR/$i"

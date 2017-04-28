@@ -2,6 +2,7 @@
 
 set -u
 
+export AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
 PROFILE_PREFIX="profile "
 
 AWSCLI="/usr/local/bin/aws"

@@ -2,13 +2,18 @@
 
 set -u
 
-AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
 PROFILE_PREFIX="profile "
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"
 
-CACHE_FILE="$HOME/.cache/hosts.private"
+CACHE_DIR="/tmp/cache"
+CACHE_FILE="$CACHE_DIR/hosts.private"
+
+if [ ! -e $CACHE_DIR ]; then
+    mkdir -p $CACHE_DIR
+fi
+
 echo "" > "$CACHE_FILE.tmp"
 
 PROFILES=$(sed -n -e "s/^\[$PROFILE_PREFIX\(.*\)\]/\1/p" < "$AWS_SHARED_CREDENTIALS_FILE")

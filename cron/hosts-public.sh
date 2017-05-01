@@ -15,6 +15,8 @@ if [ ! -e $CACHE_DIR ]; then
     mkdir -p $CACHE_DIR
 fi
 
+echo "" > "$CACHE_FILE.tmp"
+
 PROFILES=$(sed -n -e "s/^\[$PROFILE_PREFIX\(.*\)\]/\1/p" < "$AWS_SHARED_CREDENTIALS_FILE")
 
 

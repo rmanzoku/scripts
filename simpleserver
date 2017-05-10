@@ -1,0 +1,14 @@
+#!/bin/bash
+
+RECIPTDIR="$HOME/src/github.com/rmanzoku/recipe4php"
+
+if [ ! -d "$RECIPTDIR" ]; then
+    echo "Directory not found: $RECIPTDIR"
+    exit 1
+fi
+
+if [ ! -e ./index.html ] && [ ! -e ./index.php ]; then
+    cp "$RECIPTDIR/webroot/index.php" .
+fi
+
+php --server 0.0.0.0:8000 --docroot . "$RECIPTDIR/webroot/router.php"

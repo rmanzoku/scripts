@@ -45,7 +45,7 @@ case $1 in
     "redash") echo "https://github.com/getredash/redash/blob/master/CHANGELOG.md";
 	       $GITHUB_CURL https://api.github.com/repos/getredash/redash/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "rails") echo "http://weblog.rubyonrails.org/releases/";
+    "rails") echo "http://weblog.rubyonrails.org/";
 	      $GITHUB_CURL https://api.github.com/repos/rails/rails/tags | jq -r '.[].name' | head -n 10 ;;
 
     "mastodon") echo "https://github.com/tootsuite/mastodon/releases";

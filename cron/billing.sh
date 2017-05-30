@@ -2,8 +2,8 @@
 
 set -e #u
 
-AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
-PROFILE_PREFIX="profile "
+AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
+PROFILE_PREFIX="account "
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"
@@ -16,7 +16,6 @@ RESULTS+=("Account@Billing@Forecast@Timestamp")
 RESULTS+=("-------@-------@--------@---------")
 
 PROFILES=$(sed -n -e "s/^\[$PROFILE_PREFIX\(.*\)\]/\1/p" < "$AWS_SHARED_CREDENTIALS_FILE")
-
 
 for p in $PROFILES
 do

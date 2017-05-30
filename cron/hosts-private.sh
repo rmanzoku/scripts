@@ -2,8 +2,8 @@
 
 set -u
 
-export AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
-PROFILE_PREFIX="profile "
+AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
+PROFILE_PREFIX="account "
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"
@@ -22,6 +22,7 @@ PROFILES=$(sed -n -e "s/^\[$PROFILE_PREFIX\(.*\)\]/\1/p" < "$AWS_SHARED_CREDENTI
 
 for p in $PROFILES
 do
+
     $AWSCLI --profile "$p" ec2 describe-instances \
 	    --filters \
 	    'Name=instance-state-name,Values=running' \

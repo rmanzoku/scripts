@@ -12,7 +12,7 @@ CURL="curl -s"
 GITHUB_CURL="$CURL $USEROPT"
 
 if [ $# -ne 1 ]; then
-    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote redash rails mastodon puma"
+    echo "nginx docker td-agent ansible packer peco hub jd proxysql boostnote redash rails mastodon puma gixy"
     exit
 fi
 
@@ -52,7 +52,10 @@ case $1 in
 	      $GITHUB_CURL https://api.github.com/repos/tootsuite/mastodon/tags | jq -r '.[].name' | head -n 10 ;;
 
     "puma") echo "https://github.com/puma/puma/blob/master/History.md";
-	      $GITHUB_CURL https://api.github.com/repos/puma/puma/tags | jq -r '.[].name' | head -n 10 ;;
+	    $GITHUB_CURL https://api.github.com/repos/puma/puma/tags | jq -r '.[].name' | head -n 10 ;;
+
+    "gixy") echo "https://github.com/yandex/gixy/releases";
+	      $GITHUB_CURL https://api.github.com/repos/yandex/gixy/tags | jq -r '.[].name' | head -n 10 ;;
 
     *) echo "Not Found $1" >&2;;
 

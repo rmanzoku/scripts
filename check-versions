@@ -28,7 +28,8 @@ case $1 in
     "ansible") echo "https://github.com/ansible/ansible/blob/devel/CHANGELOG.md";
 	       $GITHUB_CURL https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;
 
-    "packer") $GITHUB_CURL https://api.github.com/repos/hashicorp/packer/tags | jq -r '.[].name' | head -n 10 ;;
+    "packer") echo "https://github.com/hashicorp/packer/blob/master/CHANGELOG.md";
+	      $GITHUB_CURL https://api.github.com/repos/hashicorp/packer/tags | jq -r '.[].name' | head -n 10 ;;
 
     "peco") $GITHUB_CURL https://api.github.com/repos/peco/peco/tags | jq -r '.[].name' | head -n 10 ;;
 

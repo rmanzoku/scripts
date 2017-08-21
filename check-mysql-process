@@ -7,13 +7,8 @@ SQL="select count(*) from information_schema.processlist where ID = $PID AND com
 
 COUNT=$(mysql -u "$USER" -e "$SQL" | sed -e '1d')
 
-if [ "$COUNT" = 1 ]; then
-    # まだ動いてる
-    #SQL2="select * from information_schema.processlist where ID = $PID"
-    # mysql -u "$USER" -e "$SQL2" | sed -e '1d'
-    echo running
-else
+if [ "$COUNT" != 1 ]; then
     # おわった
     SQL3="select * from information_schema.processlist where ID = $PID"
-    mysql -u "$USER" --table --execute "$SQL3" | post2slack -l "@r.manzoku"
+    mysql -u "$USER" --table --execute "$SQL3"
 fi

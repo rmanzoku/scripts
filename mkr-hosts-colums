@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eu
+
+STATUS=${1:-working}
+
+mkr hosts --status "$STATUS" | jq  -r '(.[] | [.status, .id, .name]) | join(" ")'

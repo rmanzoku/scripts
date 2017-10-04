@@ -33,7 +33,7 @@ do
     TIMESTAMP=$(date -d "$(echo "$RESPONCE" | $JQ -r '.Timestamp')" '+%s')
 
     ELAPSE=$(($TIMESTAMP - $FIRSTDAY))
-    PERIOD=$(($LASTDAY - $FIRSTDAY))
+    PERIOD=$(($LASTDAY - $FIRSTDAY + 1))
     FORECAST=$(echo "$BILLING $PERIOD $ELAPSE" | awk '{printf ("%0.3f", $1*$2/$3)}')
 
     TIMESTAMP_RESULT=$(date -d "$(echo "$RESPONCE" | $JQ -r '.Timestamp')" '+%m/%d %H:%m %Z')

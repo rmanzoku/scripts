@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+REPO_URL=$(git remote get-url origin | sed 's/:/\//g' | sed 's/git@/https:\/\//g' | sed 's/\.git//g')
+REPO_PATH=$(git rev-parse --show-prefix)
+REPO_BRANCH=$(git rev-parse --abbrev-ref @)
+
+FILE=${1:-}
+
+echo "$REPO_URL/tree/$REPO_BRANCH/$REPO_PATH$FILE"

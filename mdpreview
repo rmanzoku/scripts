@@ -1,0 +1,22 @@
+#!/bin/sh
+
+FILE=${1-README.md}
+
+grip --version > /dev/null 2>&1
+if [ $? != 0 ]; then
+    echo "grip not found"
+    exit 1
+fi
+
+lynx --version > /dev/null 2>&1
+if [ $? != 0 ]; then
+    echo "lynx not found"
+    exit 1
+fi
+
+if [ ! -e $FILE ]; then
+    echo "$FILE not found"
+    exit 1
+fi
+
+grip $FILE --export - | lynx --stdin

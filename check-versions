@@ -23,7 +23,7 @@ case $1 in
     "docker" ) $CURL https://apt.dockerproject.org/repo/dists/ubuntu-xenial/main/binary-amd64/Packages | grep Version ;;
 
     "td-agent" ) echo "https://docs.treasuredata.com/articles/td-agent-changelog";
-		 $CURL http://packages.treasuredata.com.s3.amazonaws.com/2/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
+		 $CURL http://packages.treasuredata.com.s3.amazonaws.com/3/ubuntu/xenial/dists/xenial/contrib/binary-amd64/Packages | grep Version ;;
 
     "ansible") echo "https://github.com/ansible/ansible/blob/devel/CHANGELOG.md";
 	       $GITHUB_CURL https://api.github.com/repos/ansible/ansible/tags | jq -r '.[].name' | head -n 10 ;;

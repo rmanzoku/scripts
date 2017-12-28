@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'nkf'
 require 'optparse'
 require 'mail'
 
@@ -28,7 +29,7 @@ class Post2Mail
       }
 
       op.on('-a', '--address VALUE', "SMTP host address (default: #{opts[:address]})") do |v|
-          opts[:host] = v
+          opts[:address] = v
       end
 
       op.on('-P', '--port VALUE', "SMTP port (default: #{opts[:port]})") do |v|
@@ -70,23 +71,26 @@ class Post2Mail
 
     def run
       opts, _args = parse_options
-
-      input = STDIN.read
       domain = opts[:from].split('@')[1]
+      input = STDIN.read
+      mail_str = <<~ROW
+                  From: #{opts[:from]}
+                  To: #{opts[:to]}
+                  Subject: #{NKF.nkf('-WMm0j', opts[:subject])}
+                  Date: #{Time.now.strftime('%a, %d %b %Y %X %z')}
+                  Mime-Version: 1.0
+                  Content-Type: text/plain; charset=ISO-2022-JP
+                  Content-Transfer-Encoding: 7bit
 
-      Mail.defaults do
-        delivery_method :smtp, { address:  opts[:address],
-                                 port:  opts[:port],
-                                 domain: domain,
-                                 user_name: opts[:user],
-                                 password: opts[:password] }
-      end
+                  #{input}
+                  ROW
 
-      Mail.deliver do
-        from opts[:from]
-        to opts[:to]
-        subject opts[:subject]
-        body input
+      ssl_context = Net::SMTP.default_ssl_context
+
+      smtp = Net::SMTP.new(opts[:address], opts[:port])
+      smtp.enable_starttls(ssl_context)
+      smtp.start(domain, opts[:user], opts[:password], :login) do |s|
+        s.send_message(mail_str, opts[:from], opts[:to])
       end
     end
   end

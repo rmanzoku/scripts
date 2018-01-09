@@ -3,7 +3,6 @@
 
 require 'nkf'
 require 'optparse'
-require 'mail'
 
 class Post2Mail
   class CLI

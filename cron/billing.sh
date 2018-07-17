@@ -3,7 +3,7 @@
 set -e #u
 
 AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
-PROFILE_PREFIX="account "
+PROFILE_PREFIX=""
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"

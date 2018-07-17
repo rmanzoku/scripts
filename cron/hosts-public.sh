@@ -3,7 +3,7 @@
 set -u
 
 AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
-PROFILE_PREFIX="account "
+PROFILE_PREFIX=""
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"
@@ -32,4 +32,4 @@ do
 
 done
 
-sort -t" " -k2 "$CACHE_FILE.tmp" | column -t > "$CACHE_FILE"
+sort -t" " -k2 "$CACHE_FILE.tmp" | uniq | column -t > "$CACHE_FILE"

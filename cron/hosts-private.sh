@@ -3,7 +3,7 @@
 set -u
 
 AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-/etc/boto.cfg}
-PROFILE_PREFIX="account "
+PROFILE_PREFIX=""
 
 AWSCLI="/usr/local/bin/aws"
 JQ="/usr/bin/jq"
@@ -22,7 +22,7 @@ PROFILES=$(sed -n -e "s/^\[$PROFILE_PREFIX\(.*\)\]/\1/p" < "$AWS_SHARED_CREDENTI
 
 for p in $PROFILES
 do
-
+    # echo $p
     $AWSCLI --profile "$p" ec2 describe-instances \
 	    --filters \
 	    'Name=instance-state-name,Values=running' \
@@ -33,4 +33,4 @@ do
 
 done
 
-sort -t" " -k2 "$CACHE_FILE.tmp" | column -t > "$CACHE_FILE"
+sort -t" " -k2 "$CACHE_FILE.tmp" | uniq | column -t > "$CACHE_FILE"

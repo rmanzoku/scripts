@@ -11,4 +11,4 @@ if [ ! -e ./index.html ] && [ ! -e ./index.php ]; then
     cp "$RECIPTDIR/webroot/index.php" .
 fi
 
-php --server 0.0.0.0:8000 --docroot . "$RECIPTDIR/webroot/router.php"
+php --server 0.0.0.0:9999 --docroot . "$RECIPTDIR/webroot/router.php"

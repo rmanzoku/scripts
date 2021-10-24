@@ -1,0 +1,3 @@
+#/bin/bash
+
+TZ='Asia/Tokyo' date --date=@$1
